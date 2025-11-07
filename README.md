@@ -63,7 +63,26 @@ Assurez-vous que **Docker Desktop** est en marche, puis exécutez :
 docker-compose up -d
 ```
 ---
+## ⚙️ Étape 2 — Compiler le Projet
 
+Nettoyez et compilez le projet avec Maven :
+
+```bash
+mvn clean package
+```
+--- 
+
+###🧩 Étape 3 — Lancer l’Application Kafka Streams
+Dans une première fenêtre PowerShell, démarrez le flux Kafka :
+
+```bash
+mvn exec:java
+```
+---
+
+##🟢 Attendez le message :
+
+Application Kafka Streams démarrée...
 ### Étape 4 — Tester le Traitement (Deuxième fenêtre PowerShell)
 
 Copiez-collez ce script PowerShell complet dans une seconde fenêtre :
