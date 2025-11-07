@@ -1,7 +1,4 @@
 
-<p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Apache_kafka.svg" alt="Kafka Logo" width="160"/>
-</p>
 
 <h1 align="center">📚 TP Kafka Streams : Nettoyage et Filtrage de Messages en Temps Réel</h1>
 
