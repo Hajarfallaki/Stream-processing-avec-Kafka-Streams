@@ -72,7 +72,7 @@ mvn clean package
 ```
 --- 
 
-###🧩 Étape 3 — Lancer l’Application Kafka Streams
+### 🧩 Étape 3 — Lancer l’Application Kafka Streams
 Dans une première fenêtre PowerShell, démarrez le flux Kafka :
 
 ```bash
@@ -80,7 +80,7 @@ mvn exec:java
 ```
 ---
 
-##🟢 Attendez le message :
+## 🟢 Attendez le message :
 
 Application Kafka Streams démarrée...
 ### Étape 4 — Tester le Traitement (Deuxième fenêtre PowerShell)
@@ -116,3 +116,10 @@ docker exec kafka kafka-console-consumer --bootstrap-server localhost:9092 --top
 
 Write-Host "`n=== Test terminé! ===" -ForegroundColor Green
 ```
+
+## La sortie de terminal 
+<img width="1678" height="746" alt="Capture d&#39;écran 2025-11-07 151720" src="https://github.com/user-attachments/assets/7a8189df-2507-4af5-a694-552742046623" />
+
+<img width="1327" height="678" alt="Capture d&#39;écran 2025-11-07 151707" src="https://github.com/user-attachments/assets/626a0c9c-67d3-43d0-a690-d62c69f055ae" />
+
+<img width="1670" height="729" alt="Capture d&#39;écran 2025-11-07 151700" src="https://github.com/user-attachments/assets/d5be6845-c123-45e0-a385-551fe1cf0159" />
