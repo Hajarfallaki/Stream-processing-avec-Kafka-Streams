@@ -61,3 +61,39 @@ Assurez-vous que **Docker Desktop** est en marche, puis exécutez :
 
 ```bash
 docker-compose up -d
+```
+---
+
+### Étape 4 — Tester le Traitement (Deuxième fenêtre PowerShell)
+
+Copiez-collez ce script PowerShell complet dans une seconde fenêtre :
+
+```bash
+Write-Host "=== Création des topics ===" -ForegroundColor Blue
+docker exec kafka kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic text-input
+docker exec kafka kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic text-clean
+docker exec kafka kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic text-dead-letter
+Write-Host "Topics vérifiés ou créés!" -ForegroundColor Green
+
+Write-Host "`n=== Envoi de messages de test ===" -ForegroundColor Blue
+"Bonjour   le    monde" | docker exec -i kafka kafka-console-producer --bootstrap-server localhost:9092 --topic text-input
+"Message valide simple" | docker exec -i kafka kafka-console-producer --bootstrap-server localhost:9092 --topic text-input
+"  texte avec espaces  " | docker exec -i kafka kafka-console-producer --bootstrap-server localhost:9092 --topic text-input
+"" | docker exec -i kafka kafka-console-producer --bootstrap-server localhost:9092 --topic text-input
+"Ce message contient SPAM" | docker exec -i kafka kafka-console-producer --bootstrap-server localhost:9092 --topic text-input
+"XXX contenu" | docker exec -i kafka kafka-console-producer --bootstrap-server localhost:9092 --topic text-input
+"Ce message est beaucoup trop long et dépasse largement la limite de cent caractères qui a été définie" | docker exec -i kafka kafka-console-producer --bootstrap-server localhost:9092 --topic text-input
+
+Write-Host "`nMessages envoyés! Attente du traitement..." -ForegroundColor Blue
+Start-Sleep -Seconds 3
+
+Write-Host "`n=== Messages dans text-clean (valides) ===" -ForegroundColor Blue
+# Doit afficher 3 messages en majuscules et nettoyés
+docker exec kafka kafka-console-consumer --bootstrap-server localhost:9092 --topic text-clean --from-beginning --max-messages 10 --timeout-ms 5000 | Out-Host
+
+Write-Host "`n=== Messages dans text-dead-letter (invalides) ===" -ForegroundColor Blue
+# Doit afficher les messages originaux contenant SPAM, XXX, trop longs ou vides (total : 4 messages)
+docker exec kafka kafka-console-consumer --bootstrap-server localhost:9092 --topic text-dead-letter --from-beginning --max-messages 10 --timeout-ms 5000 | Out-Host
+
+Write-Host "`n=== Test terminé! ===" -ForegroundColor Green
+```
