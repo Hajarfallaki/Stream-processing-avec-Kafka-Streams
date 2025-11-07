@@ -1,4 +1,4 @@
-<!-- PROJECT LOGO -->
+
 <p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Apache_kafka.svg" alt="Kafka Logo" width="160"/>
 </p>
